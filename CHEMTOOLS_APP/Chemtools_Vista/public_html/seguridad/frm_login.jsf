@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="Login" id="d1">
+    <link rel="stylesheet" href="../recursos/css/bootstrap.min.css" media="screen"/>
+     <link rel="stylesheet" href="../recursos/css/bootstrap-theme.min.css" media="screen"/>
+     
+     <link rel="stylesheet" href="../recursos/css/login.css" media="screen"/>
+        <af:form id="f1">
+                        <div class="container">
+        <div class="card card-container">
+        <p class="titulo">SOFTQA</p>
+        <h5 style="text-align: center">Sistema de Optimización de Flujo de Producción Química y Almacén</h5>
+        <br/>
+            <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+                <p id="profile-name" class="profile-name-card"></p>
+                <div style="text-align: center">
+                        <div style="form-signin">
+                            <span id="reauth-email" class="reauth-email"></span>
+                            <af:panelFormLayout>
+                                <af:inputText value="#{sessionScopeBeanlogin.usuario}" label="Usuario" required="true" requiredMessageDetail="Falta Usuario"/>
+                                <br/>
+                                <af:inputText binding="#{sessionScopeBeanlogin.contraInput}" value="#{sessionScopeBeanlogin.contrasena}" label="Contraseña:" required="true" requiredMessageDetail="Falta Contraseña" secret="true"/>
+                                <br/>
+                            </af:panelFormLayout>
+                            <af:button actionListener="#{Frm_login.login}" styleClass="btnIng" text="Ingresar" id="b1"/>
+                        </div>
+                </div>
+        </div>
+    </div>
+        </af:form>
+    </af:document>
+    <!--oracle-jdev-comment:auto-binding-backing-bean-name:backing_seguridad_frm_login1-->
+</f:view>

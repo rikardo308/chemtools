@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+  <persistence-unit name="Chemtools_Logica">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <jta-data-source>java:/app/jdbc/jdbc/Connection1DS</jta-data-source>
+    <class>chemtools_logica.Entidades.Rolxpermisos</class>
+    <class>chemtools_logica.Entidades.Almacen</class>
+    <class>chemtools_logica.Entidades.Banco</class>
+    <class>chemtools_logica.Entidades.Contenedores</class>
+    <class>chemtools_logica.Entidades.Detalleformula</class>
+    <class>chemtools_logica.Entidades.Empresa</class>
+    <class>chemtools_logica.Entidades.Evento</class>
+    <class>chemtools_logica.Entidades.Eventoxinsumo</class>
+    <class>chemtools_logica.Entidades.Eventoxproducto</class>
+    <class>chemtools_logica.Entidades.Eventoxusuario</class>
+    <class>chemtools_logica.Entidades.Factura</class>
+    <class>chemtools_logica.Entidades.Formula</class>
+    <class>chemtools_logica.Entidades.Gasto</class>
+    <class>chemtools_logica.Entidades.Insumo</class>
+    <class>chemtools_logica.Entidades.Laboratorio</class>
+    <class>chemtools_logica.Entidades.Medida</class>
+    <class>chemtools_logica.Entidades.Ordenproduccion</class>
+    <class>chemtools_logica.Entidades.Permisos</class>
+    <class>chemtools_logica.Entidades.Persona</class>
+    <class>chemtools_logica.Entidades.Producto</class>
+    <class>chemtools_logica.Entidades.Rol</class>
+    <class>chemtools_logica.Entidades.Rolxpermisos</class>
+    <class>chemtools_logica.Entidades.Tipogasto</class>
+    <class>chemtools_logica.Entidades.Tipoinsumo</class>
+    <class>chemtools_logica.Entidades.Tipoproducto</class>
+    <class>chemtools_logica.Entidades.Transformacion</class>
+    <class>chemtools_logica.Entidades.Ubigeo</class>
+    <class>chemtools_logica.Entidades.Usuario</class>
+    <class>chemtools_logica.Entidades.Usuarioxrol</class>
+    <properties>
+      <property name="eclipselink.target-server" value="WebLogic_10"/>
+      <property name="javax.persistence.jtaDataSource" value="java:/app/jdbc/jdbc/Connection1DS"/>
+    </properties>
+  </persistence-unit>
+</persistence>
