@@ -1,4 +1,9 @@
 ksdljdklsajl
 dhsajdhksajdhkj
 jorge villavicencio es el mejor
+<<<<<<< HEAD
 adsdfadfs
+=======
+cucho se la come
+jajajaja
+>>>>>>> origin/ChemTools
