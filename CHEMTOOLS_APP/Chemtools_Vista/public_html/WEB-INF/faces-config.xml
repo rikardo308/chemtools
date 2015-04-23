@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<faces-config version="2.1" xmlns="http://java.sun.com/xml/ns/javaee">
+  <managed-bean>
+    <managed-bean-name>Frm_login</managed-bean-name>
+    <managed-bean-class>view.backing.seguridad.Frm_login</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <!--oracle-jdev-comment:managed-bean-jsp-link:1frm_prueba.jsf-->
+    <managed-property>
+      <property-name>sessionScopeBeanlogin</property-name>
+      <property-class>view.backing.seguridad.bSessionScopeBeanlogin</property-class>
+      <value>#{sessionScopeBeanlogin}</value>
+    </managed-property>
+  </managed-bean>
+  
+  <managed-bean>
+    <managed-bean-name>sessionScopeBeanlogin</managed-bean-name>
+    <managed-bean-class>view.backing.seguridad.bSessionScopeBeanlogin</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <!--oracle-jdev-comment:managed-bean-jsp-link:1frm_prueba.jsf-->
+  </managed-bean>
+  
+    <managed-bean>
+    <managed-bean-name>Frm_insumos</managed-bean-name>
+    <managed-bean-class>view.backing.insumos.Frm_insumos</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <!--oracle-jdev-comment:managed-bean-jsp-link:1frm_prueba.jsf-->
+    <managed-property>
+      <property-name>sessionScopeBeaninsumo</property-name>
+      <property-class>view.backing.insumos.bSessionScopeBeaninsumo</property-class>
+      <value>#{sessionScopeBeaninsumo}</value>
+    </managed-property>
+  </managed-bean>
+  
+  <managed-bean>
+    <managed-bean-name>sessionScopeBeaninsumo</managed-bean-name>
+    <managed-bean-class>view.backing.insumos.bSessionScopeBeaninsumo</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <!--oracle-jdev-comment:managed-bean-jsp-link:1frm_prueba.jsf-->
+  </managed-bean>
+  
+  <application>
+    <default-render-kit-id>oracle.adf.rich</default-render-kit-id>
+  </application>
+  
+        <lifecycle>
+            <phase-listener> view.backing.Utils.MyPhaseListener </phase-listener>
+        </lifecycle>
+        
+        <validator>
+    <validator-id>validator_CodInsumo</validator-id>
+    <validator-class>view.backing.Utils.Validator.InsumoValidator</validator-class>
+  </validator>
+</faces-config>

@@ -1,0 +1,424 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<table xmlns="http://xmlns.oracle.com/jdeveloper/1211/offlinedb">
+  <name>detalleformula</name>
+  <columns>
+    <column>
+      <name>idTipoInsumo</name>
+      <dataTypeUsage>
+        <attributeValues>
+          <entry>
+            <key>size</key>
+            <value class="java.lang.Long">10</value>
+          </entry>
+        </attributeValues>
+        <dataTypeID class="oracle.javatools.db.datatypes.DataTypeID">
+          <providerClass>oracle.javatools.db.mysql.MySQLDatabaseImpl</providerClass>
+          <typeName>INT</typeName>
+        </dataTypeID>
+      </dataTypeUsage>
+      <notNull>true</notNull>
+      <properties>
+        <entry>
+          <key>OfflineDBConstants.IMPORT_SOURCE_ID</key>
+          <value class="oracle.javatools.db.ReferenceID">
+            <name>idTipoInsumo</name>
+            <parent class="oracle.javatools.db.ReferenceID">
+              <name>detalleformula</name>
+              <schemaName>chemtoolsbd</schemaName>
+              <type>TABLE</type>
+            </parent>
+            <type>COLUMN</type>
+          </value>
+        </entry>
+      </properties>
+    </column>
+    <column>
+      <name>idFormula</name>
+      <dataTypeUsage>
+        <attributeValues>
+          <entry>
+            <key>size</key>
+            <value class="java.lang.Long">10</value>
+          </entry>
+        </attributeValues>
+        <dataTypeID class="oracle.javatools.db.datatypes.DataTypeID">
+          <providerClass>oracle.javatools.db.mysql.MySQLDatabaseImpl</providerClass>
+          <typeName>INT</typeName>
+        </dataTypeID>
+      </dataTypeUsage>
+      <notNull>true</notNull>
+      <properties>
+        <entry>
+          <key>OfflineDBConstants.IMPORT_SOURCE_ID</key>
+          <value class="oracle.javatools.db.ReferenceID">
+            <name>idFormula</name>
+            <parent class="oracle.javatools.db.ReferenceID">
+              <name>detalleformula</name>
+              <schemaName>chemtoolsbd</schemaName>
+              <type>TABLE</type>
+            </parent>
+            <type>COLUMN</type>
+          </value>
+        </entry>
+      </properties>
+    </column>
+    <column>
+      <name>idTipoProducto</name>
+      <dataTypeUsage>
+        <attributeValues>
+          <entry>
+            <key>size</key>
+            <value class="java.lang.Long">10</value>
+          </entry>
+        </attributeValues>
+        <dataTypeID class="oracle.javatools.db.datatypes.DataTypeID">
+          <providerClass>oracle.javatools.db.mysql.MySQLDatabaseImpl</providerClass>
+          <typeName>INT</typeName>
+        </dataTypeID>
+      </dataTypeUsage>
+      <notNull>true</notNull>
+      <properties>
+        <entry>
+          <key>OfflineDBConstants.IMPORT_SOURCE_ID</key>
+          <value class="oracle.javatools.db.ReferenceID">
+            <name>idTipoProducto</name>
+            <parent class="oracle.javatools.db.ReferenceID">
+              <name>detalleformula</name>
+              <schemaName>chemtoolsbd</schemaName>
+              <type>TABLE</type>
+            </parent>
+            <type>COLUMN</type>
+          </value>
+        </entry>
+      </properties>
+    </column>
+    <column>
+      <name>Cantidad_Insumo</name>
+      <dataTypeUsage>
+        <attributeValues>
+          <entry>
+            <key>size</key>
+            <value class="java.lang.Long">10</value>
+          </entry>
+        </attributeValues>
+        <dataTypeID class="oracle.javatools.db.datatypes.DataTypeID">
+          <providerClass>oracle.javatools.db.mysql.MySQLDatabaseImpl</providerClass>
+          <typeName>INT</typeName>
+        </dataTypeID>
+      </dataTypeUsage>
+      <notNull>false</notNull>
+      <properties>
+        <entry>
+          <key>OfflineDBConstants.IMPORT_SOURCE_ID</key>
+          <value class="oracle.javatools.db.ReferenceID">
+            <name>Cantidad_Insumo</name>
+            <parent class="oracle.javatools.db.ReferenceID">
+              <name>detalleformula</name>
+              <schemaName>chemtoolsbd</schemaName>
+              <type>TABLE</type>
+            </parent>
+            <type>COLUMN</type>
+          </value>
+        </entry>
+      </properties>
+    </column>
+    <column>
+      <name>Cantidad_Producto</name>
+      <dataTypeUsage>
+        <attributeValues>
+          <entry>
+            <key>size</key>
+            <value class="java.lang.Long">10</value>
+          </entry>
+        </attributeValues>
+        <dataTypeID class="oracle.javatools.db.datatypes.DataTypeID">
+          <providerClass>oracle.javatools.db.mysql.MySQLDatabaseImpl</providerClass>
+          <typeName>INT</typeName>
+        </dataTypeID>
+      </dataTypeUsage>
+      <notNull>false</notNull>
+      <properties>
+        <entry>
+          <key>OfflineDBConstants.IMPORT_SOURCE_ID</key>
+          <value class="oracle.javatools.db.ReferenceID">
+            <name>Cantidad_Producto</name>
+            <parent class="oracle.javatools.db.ReferenceID">
+              <name>detalleformula</name>
+              <schemaName>chemtoolsbd</schemaName>
+              <type>TABLE</type>
+            </parent>
+            <type>COLUMN</type>
+          </value>
+        </entry>
+      </properties>
+    </column>
+  </columns>
+  <constraints>
+    <constraint class="oracle.javatools.db.FKConstraint">
+      <name>fk_detalleformula_formula1</name>
+      <columnIDs>
+        <columnID class="oracle.javatools.db.NameBasedID">
+          <name>idFormula</name>
+          <parent class="oracle.javatools.db.NameBasedID">
+            <name>detalleformula</name>
+            <schemaName>chemtoolsbd</schemaName>
+            <type>TABLE</type>
+          </parent>
+          <schemaName>chemtoolsbd</schemaName>
+          <type>COLUMN</type>
+        </columnID>
+      </columnIDs>
+      <enabled>true</enabled>
+      <onDeleteAction>NO_ACTION</onDeleteAction>
+      <properties>
+        <entry>
+          <key>OfflineDBConstants.IMPORT_SOURCE_ID</key>
+          <value class="oracle.javatools.db.ReferenceID">
+            <name>fk_detalleformula_formula1</name>
+            <childObjectNames>
+              <childObjectName>idFormula</childObjectName>
+            </childObjectNames>
+            <parent class="oracle.javatools.db.ReferenceID">
+              <name>detalleformula</name>
+              <schemaName>chemtoolsbd</schemaName>
+              <type>TABLE</type>
+            </parent>
+            <subType>FKConstraint</subType>
+            <type>CONSTRAINT</type>
+          </value>
+        </entry>
+      </properties>
+      <referenceID class="oracle.javatools.db.NameBasedID">
+        <name>PRIMARY</name>
+        <parent class="oracle.javatools.db.NameBasedID">
+          <name>formula</name>
+          <schemaName>chemtoolsbd</schemaName>
+          <type>TABLE</type>
+        </parent>
+        <schemaName>chemtoolsbd</schemaName>
+        <type>CONSTRAINT</type>
+      </referenceID>
+    </constraint>
+    <constraint class="oracle.javatools.db.FKConstraint">
+      <name>fk_detalleformula_tipoinsumo1</name>
+      <columnIDs>
+        <columnID class="oracle.javatools.db.NameBasedID">
+          <name>idTipoInsumo</name>
+          <parent class="oracle.javatools.db.NameBasedID">
+            <name>detalleformula</name>
+            <schemaName>chemtoolsbd</schemaName>
+            <type>TABLE</type>
+          </parent>
+          <schemaName>chemtoolsbd</schemaName>
+          <type>COLUMN</type>
+        </columnID>
+      </columnIDs>
+      <enabled>true</enabled>
+      <onDeleteAction>NO_ACTION</onDeleteAction>
+      <properties>
+        <entry>
+          <key>OfflineDBConstants.IMPORT_SOURCE_ID</key>
+          <value class="oracle.javatools.db.ReferenceID">
+            <name>fk_detalleformula_tipoinsumo1</name>
+            <childObjectNames>
+              <childObjectName>idTipoInsumo</childObjectName>
+            </childObjectNames>
+            <parent class="oracle.javatools.db.ReferenceID">
+              <name>detalleformula</name>
+              <schemaName>chemtoolsbd</schemaName>
+              <type>TABLE</type>
+            </parent>
+            <subType>FKConstraint</subType>
+            <type>CONSTRAINT</type>
+          </value>
+        </entry>
+      </properties>
+      <referenceID class="oracle.javatools.db.NameBasedID">
+        <name>PRIMARY</name>
+        <parent class="oracle.javatools.db.NameBasedID">
+          <name>tipoinsumo</name>
+          <schemaName>chemtoolsbd</schemaName>
+          <type>TABLE</type>
+        </parent>
+        <schemaName>chemtoolsbd</schemaName>
+        <type>CONSTRAINT</type>
+      </referenceID>
+    </constraint>
+    <constraint class="oracle.javatools.db.FKConstraint">
+      <name>fk_detalleformula_tipoproducto1</name>
+      <columnIDs>
+        <columnID class="oracle.javatools.db.NameBasedID">
+          <name>idTipoProducto</name>
+          <parent class="oracle.javatools.db.NameBasedID">
+            <name>detalleformula</name>
+            <schemaName>chemtoolsbd</schemaName>
+            <type>TABLE</type>
+          </parent>
+          <schemaName>chemtoolsbd</schemaName>
+          <type>COLUMN</type>
+        </columnID>
+      </columnIDs>
+      <enabled>true</enabled>
+      <onDeleteAction>NO_ACTION</onDeleteAction>
+      <properties>
+        <entry>
+          <key>OfflineDBConstants.IMPORT_SOURCE_ID</key>
+          <value class="oracle.javatools.db.ReferenceID">
+            <name>fk_detalleformula_tipoproducto1</name>
+            <childObjectNames>
+              <childObjectName>idTipoProducto</childObjectName>
+            </childObjectNames>
+            <parent class="oracle.javatools.db.ReferenceID">
+              <name>detalleformula</name>
+              <schemaName>chemtoolsbd</schemaName>
+              <type>TABLE</type>
+            </parent>
+            <subType>FKConstraint</subType>
+            <type>CONSTRAINT</type>
+          </value>
+        </entry>
+      </properties>
+      <referenceID class="oracle.javatools.db.NameBasedID">
+        <name>PRIMARY</name>
+        <parent class="oracle.javatools.db.NameBasedID">
+          <name>tipoproducto</name>
+          <schemaName>chemtoolsbd</schemaName>
+          <type>TABLE</type>
+        </parent>
+        <schemaName>chemtoolsbd</schemaName>
+        <type>CONSTRAINT</type>
+      </referenceID>
+    </constraint>
+    <constraint class="oracle.javatools.db.PKConstraint">
+      <name>PRIMARY</name>
+      <columnIDs>
+        <columnID class="oracle.javatools.db.NameBasedID">
+          <name>idTipoInsumo</name>
+          <parent class="oracle.javatools.db.NameBasedID">
+            <name>detalleformula</name>
+            <schemaName>chemtoolsbd</schemaName>
+            <type>TABLE</type>
+          </parent>
+          <schemaName>chemtoolsbd</schemaName>
+          <type>COLUMN</type>
+        </columnID>
+        <columnID class="oracle.javatools.db.NameBasedID">
+          <name>idFormula</name>
+          <parent class="oracle.javatools.db.NameBasedID">
+            <name>detalleformula</name>
+            <schemaName>chemtoolsbd</schemaName>
+            <type>TABLE</type>
+          </parent>
+          <schemaName>chemtoolsbd</schemaName>
+          <type>COLUMN</type>
+        </columnID>
+        <columnID class="oracle.javatools.db.NameBasedID">
+          <name>idTipoProducto</name>
+          <parent class="oracle.javatools.db.NameBasedID">
+            <name>detalleformula</name>
+            <schemaName>chemtoolsbd</schemaName>
+            <type>TABLE</type>
+          </parent>
+          <schemaName>chemtoolsbd</schemaName>
+          <type>COLUMN</type>
+        </columnID>
+      </columnIDs>
+      <enabled>true</enabled>
+      <properties>
+        <entry>
+          <key>OfflineDBConstants.IMPORT_SOURCE_ID</key>
+          <value class="oracle.javatools.db.ReferenceID">
+            <name>PRIMARY</name>
+            <childObjectNames>
+              <childObjectName>idTipoInsumo</childObjectName>
+              <childObjectName>idFormula</childObjectName>
+              <childObjectName>idTipoProducto</childObjectName>
+            </childObjectNames>
+            <parent class="oracle.javatools.db.ReferenceID">
+              <name>detalleformula</name>
+              <schemaName>chemtoolsbd</schemaName>
+              <type>TABLE</type>
+            </parent>
+            <subType>PKConstraint</subType>
+            <type>CONSTRAINT</type>
+          </value>
+        </entry>
+      </properties>
+    </constraint>
+  </constraints>
+  <indexes>
+    <indexe>
+      <name>fk_detalleformula_formula1_idx</name>
+      <columnExpressions>
+        <columnExpression>
+          <expressionSource>idFormula</expressionSource>
+          <orderType>ASC</orderType>
+        </columnExpression>
+      </columnExpressions>
+      <indexType>NORMAL</indexType>
+      <properties>
+        <entry>
+          <key>OfflineDBConstants.IMPORT_SOURCE_ID</key>
+          <value class="oracle.javatools.db.ReferenceID">
+            <name>fk_detalleformula_formula1_idx</name>
+            <parent class="oracle.javatools.db.ReferenceID">
+              <name>detalleformula</name>
+              <schemaName>chemtoolsbd</schemaName>
+              <type>TABLE</type>
+            </parent>
+            <schemaName>chemtoolsbd</schemaName>
+            <type>INDEX</type>
+          </value>
+        </entry>
+      </properties>
+      <schema>
+        <name>chemtoolsbd</name>
+      </schema>
+    </indexe>
+    <indexe>
+      <name>fk_detalleformula_tipoproducto1_idx</name>
+      <columnExpressions>
+        <columnExpression>
+          <expressionSource>idTipoProducto</expressionSource>
+          <orderType>ASC</orderType>
+        </columnExpression>
+      </columnExpressions>
+      <indexType>NORMAL</indexType>
+      <properties>
+        <entry>
+          <key>OfflineDBConstants.IMPORT_SOURCE_ID</key>
+          <value class="oracle.javatools.db.ReferenceID">
+            <name>fk_detalleformula_tipoproducto1_idx</name>
+            <parent class="oracle.javatools.db.ReferenceID">
+              <name>detalleformula</name>
+              <schemaName>chemtoolsbd</schemaName>
+              <type>TABLE</type>
+            </parent>
+            <schemaName>chemtoolsbd</schemaName>
+            <type>INDEX</type>
+          </value>
+        </entry>
+      </properties>
+      <schema>
+        <name>chemtoolsbd</name>
+      </schema>
+    </indexe>
+  </indexes>
+  <properties>
+    <entry>
+      <key>OfflineDBConstants.IMPORT_SOURCE_ID</key>
+      <value class="oracle.javatools.db.ReferenceID">
+        <name>detalleformula</name>
+        <schemaName>chemtoolsbd</schemaName>
+        <type>TABLE</type>
+      </value>
+    </entry>
+    <entry>
+      <key>TableType</key>
+      <value class="oracle.javatools.db.Table$TableType">NORMAL</value>
+    </entry>
+  </properties>
+  <schema>
+    <name>chemtoolsbd</name>
+  </schema>
+</table>
