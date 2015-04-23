@@ -60,6 +60,32 @@ public class BDL_SFEventoxinsumoBean implements BDL_SFEventoxinsumoRemote, BDL_S
         return em.createNamedQuery("Eventoxinsumo.findAll", Eventoxinsumo.class).getResultList();
     }
     
+    public List<Eventoxinsumo> getInsumosGenerales(){
+        List<Eventoxinsumo> eventoXInsumos = new ArrayList<Eventoxinsumo>();
+        
+        String ejbQuery ="SELECT t1.* "+
+                            "FROM eventoxinsumo t1 " +
+                            "INNER JOIN insumo AS ins ON t1.idInsumo = ins.idInsumo " +
+                            "INNER JOIN almacen AS alm ON t1.idUsuario = alm.idAlmacen "+
+                            "INNER JOIN "+
+                            "( "+
+                              "SELECT MAX(Fecha_Evento) maxdate, idInsumo,idUsuario "+
+                              "FROM eventoxinsumo "+
+                              "GROUP BY idInsumo "+
+                            ") t2 "+
+                              "ON t1.idInsumo = t2.idInsumo "+
+                              "AND t1.Fecha_Evento = t2.maxdate";
+        try{
+            Query query = em.createNativeQuery(ejbQuery, Eventoxinsumo.class);
+            eventoXInsumos = query.getResultList();
+        }catch(Exception e)
+        {
+            eventoXInsumos = null;
+        }
+        
+        return eventoXInsumos;
+    }
+    
     public List<Eventoxinsumo> getInsumosporAlmacenActivo(int nidAlmacen){
         List<Eventoxinsumo> eventoXInsumos = new ArrayList<Eventoxinsumo>();
         

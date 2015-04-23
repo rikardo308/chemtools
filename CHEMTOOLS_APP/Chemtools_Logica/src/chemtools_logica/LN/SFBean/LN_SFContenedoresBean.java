@@ -47,4 +47,13 @@ public class LN_SFContenedoresBean implements LN_SFContenedoresRemote, LN_SFCont
         
         return contenedoresBean;
     }
+    
+    public void insertContenedor(ContenedoresBean bean){
+        Contenedores entidad = new Contenedores();
+        
+        entidad.setDescripcion(bean.getDescripcion());
+        entidad.setEstado(1);
+        
+        bDL_SFContenedoresRemote.persistContenedores(entidad);
+    }
 }

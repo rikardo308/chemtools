@@ -10,4 +10,6 @@ import javax.ejb.Remote;
 public interface LN_SFMedidaRemote {
     
     List<MedidaBean> allMedidas();
+    
+    void insertMedida(MedidaBean bean);
 }

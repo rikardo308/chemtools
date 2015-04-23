@@ -2,6 +2,7 @@ package chemtools_logica.LN.SFBean;
 
 import chemtools_logica.BDL.IR.BDL_SFMedidaRemote;
 
+import chemtools_logica.Beans.ContenedoresBean;
 import chemtools_logica.Beans.MedidaBean;
 
 import chemtools_logica.Entidades.Medida;
@@ -44,5 +45,14 @@ public class LN_SFMedidaBean implements LN_SFMedidaRemote, LN_SFMedidaLocal {
         }
         
         return medidasBean;
+    }
+    
+    public void insertMedida(MedidaBean bean){
+        Medida entidad = new Medida();
+        
+        entidad.setDescripcion(bean.getDescripcion());
+        entidad.setEstado(1);
+        
+        bDL_SFMedidaRemote.persistMedida(entidad);
     }
 }

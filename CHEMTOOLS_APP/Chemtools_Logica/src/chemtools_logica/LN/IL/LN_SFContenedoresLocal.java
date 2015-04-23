@@ -10,4 +10,6 @@ import javax.ejb.Local;
 public interface LN_SFContenedoresLocal {
     
     List<ContenedoresBean> getContenedoresActivos();
+    
+    void insertContenedor(ContenedoresBean bean);
 }

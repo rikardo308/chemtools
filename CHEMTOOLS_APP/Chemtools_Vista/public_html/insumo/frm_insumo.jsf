@@ -288,7 +288,7 @@
                                 <f:selectItems value="#{sessionScopeBeaninsumo.listaEmpresa}"/>
                         </af:selectOneChoice>
                         
-                        <af:selectOneChoice value="#{sessionScopeBeaninsumo.almacenedit}" autoSubmit="true" valueChangeListener="#{Frm_insumos.verificarCambioAlmacenInsumo}" label="Almacen"
+                        <af:selectOneChoice value="#{sessionScopeBeaninsumo.almacenedit}" visible="#{sessionScopeBeaninsumo.almacenEsc}" autoSubmit="true" valueChangeListener="#{Frm_insumos.verificarCambioAlmacenInsumo}" label="Almacen"
                                             binding="#{Frm_insumos.almacenEdit}">
                                 <f:selectItems value="#{sessionScopeBeaninsumo.listaAlmacen}"/>
                         </af:selectOneChoice>
@@ -380,18 +380,21 @@
                         </af:inputText>
                        
                         
-                            <af:selectOneChoice required="true" value="#{sessionScopeBeaninsumo.contenedorNuevotInsumo}" label="Contenedor">
+                            <af:selectOneChoice required="true" value="#{sessionScopeBeaninsumo.contenedorNuevotInsumo}" label="Contenedor"
+                                                binding="#{Frm_insumos.inputnuevoTInsumoContenedor}">
                                 <f:selectItems value="#{sessionScopeBeaninsumo.listaContenedores}"/>
                             </af:selectOneChoice>
                             
-                            <af:button text="Nuevo Contenedor"/>
+                            <af:button immediate="true" text="Nuevo Contenedor" actionListener="#{Frm_insumos.mostrarpopNuevoContenedor}" binding="#{Frm_insumos.btnNuevoContenedor}"/>
                         
                         
-                            <af:selectOneChoice required="true" value="#{sessionScopeBeaninsumo.UMedidaNuevotInsumo}" label="U.Medida">
+                            <af:selectOneChoice required="true" value="#{sessionScopeBeaninsumo.UMedidaNuevotInsumo}" label="U.Medida"
+                                                binding="#{Frm_insumos.inputnuevoTInsumoMedida}">
                                 <f:selectItems value="#{sessionScopeBeaninsumo.listaMedida}"/>
                             </af:selectOneChoice>
                             
-                            <af:button text="Nueva U.Medida"/>
+                            <af:button immediate="true" text="Nueva U.Medida" actionListener="#{Frm_insumos.mostrarpopNuevaMedida}"
+                                       binding="#{Frm_insumos.btnNuevaMedida}"/>
                         
                         <br/>
                         
@@ -401,6 +404,41 @@
                 
                 </af:dialog>
              </af:popup>
+             
+             <af:popup id="popNuevoContenedor" contentDelivery="lazy" childCreation="deferred" autoCancel="disabled" animate="default"
+                       binding="#{Frm_insumos.popNuevoContenedor}">
+             
+                <af:dialog type="none" resize="off" title="Nuevo Contenedor">
+                
+                    <af:panelFormLayout>
+                    
+                        <af:inputText value="#{sessionScopeBeaninsumo.descripcionNuevoContenedor}" required="true" label="Descripcion"/>
+                        
+                        <af:button text="Guardar" actionListener="#{Frm_insumos.insertarContenedor}"/>
+                    
+                    </af:panelFormLayout>
+                
+                </af:dialog>
+             
+             </af:popup>
+             
+             <af:popup id="popNuevaMedida" contentDelivery="lazy" childCreation="deferred" autoCancel="disabled" animate="default"
+                       binding="#{Frm_insumos.popnuevaMedida}">
+             
+                <af:dialog type="none" resize="off" title="Nueva Medida">
+                
+                    <af:panelFormLayout>
+                    
+                        <af:inputText value="#{sessionScopeBeaninsumo.descripcionNuevaMedida}" required="true" label="Descripcion"/>
+                        
+                        <af:button text="Guardar" actionListener="#{Frm_insumos.insertarMedida}"/>
+                    
+                    </af:panelFormLayout>
+                
+                </af:dialog>
+             
+             </af:popup>
+             
             
         </af:form>
     </af:document>

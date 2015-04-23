@@ -19,6 +19,8 @@ import chemtools_logica.LN.IR.LN_SFInsumoRemote;
 import chemtools_logica.LN.IR.LN_SFMedidaRemote;
 import chemtools_logica.LN.IR.LN_SFTipoinsumoRemote;
 
+import java.io.InputStream;
+
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
@@ -28,10 +30,13 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+
+import javax.faces.validator.ValidatorException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -43,6 +48,7 @@ import oracle.adf.view.rich.component.rich.RichForm;
 import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.data.RichTable;
 import oracle.adf.view.rich.component.rich.input.RichInputDate;
+import oracle.adf.view.rich.component.rich.input.RichInputFile;
 import oracle.adf.view.rich.component.rich.input.RichInputText;
 import oracle.adf.view.rich.component.rich.input.RichSelectOneChoice;
 import oracle.adf.view.rich.component.rich.layout.RichPanelFormLayout;
@@ -53,7 +59,12 @@ import oracle.adf.view.rich.component.rich.output.RichImage;
 import oracle.adf.view.rich.component.rich.output.RichOutputLabel;
 import oracle.adf.view.rich.render.ClientEvent;
 
+import org.apache.myfaces.trinidad.change.RowKeySetAttributeChange;
+import org.apache.myfaces.trinidad.context.RequestContext;
 import org.apache.myfaces.trinidad.event.SelectionEvent;
+
+import org.apache.myfaces.trinidad.model.RowKeySetImpl;
+import org.apache.myfaces.trinidad.model.UploadedFile;
 
 import view.backing.Utils.Utils;
 
@@ -107,6 +118,12 @@ public class Frm_insumos {
     private RichPanelFormLayout plPpopnuevoTInsumo;
     private RichPopup popNuevoTInsumo;
     private RichButton btnNuevotInsumo;
+    private RichPopup popNuevoContenedor;
+    private RichButton btnNuevoContenedor;
+    private RichPopup popnuevaMedida;
+    private RichButton btnNuevaMedida;
+    private RichSelectOneChoice inputnuevoTInsumoContenedor;
+    private RichSelectOneChoice inputnuevoTInsumoMedida;
 
     public Frm_insumos(){    
     }
@@ -192,6 +209,10 @@ public class Frm_insumos {
         Utils.addTarget(getBtnVerImagen()); 
         Utils.addTarget(getDirectorio());
         Utils.addTarget(getCantInsumos());
+        
+        sessionScopeBeaninsumo.setAlmacenEsc(true);
+        
+        Utils.clearRowSelection(getTbInsumos());
     }
     
     public void selectInsumo(SelectionEvent se){
@@ -247,6 +268,8 @@ public class Frm_insumos {
         Utils.addTarget(getDirectorio());
         
         sessionScopeBeaninsumo.setNidAlmacenSelecc(0);
+        
+        sessionScopeBeaninsumo.setAlmacenEsc(false);
     }
     
     public void busquedaInsumo(ActionEvent event){
@@ -265,6 +288,8 @@ public class Frm_insumos {
         bean.setFechaCaducidadMax(sessionScopeBeaninsumo.getFechaCaducidadMax());
         bean.setEstado(sessionScopeBeaninsumo.getEstadobusqueda());
         bean.setCalidad(sessionScopeBeaninsumo.getCalidadbusqueda());
+        
+        sessionScopeBeaninsumo.setInsumos(new ArrayList<InsumoBean>());
         
             sessionScopeBeaninsumo.setInsumos(lN_SFInsumoRemote.getBusquedaInsumos(bean));
             getTbInsumos().setValue(sessionScopeBeaninsumo.getInsumos());
@@ -316,6 +341,66 @@ public class Frm_insumos {
         Utils.showPopUpMIDDLE(getPopVerImagen());
     }
     
+    public void mostrarpopNuevoContenedor(ActionEvent event){
+        sessionScopeBeaninsumo.setDescripcionNuevoContenedor("");
+        Utils.showPopUpAFTER_START(getPopNuevoContenedor(), getBtnNuevoContenedor());
+    }
+    
+    public void mostrarpopNuevaMedida(ActionEvent event){
+        sessionScopeBeaninsumo.setDescripcionNuevaMedida("");
+        Utils.showPopUpAFTER_START(getPopnuevaMedida(), getBtnNuevaMedida());
+    }
+    
+    public void insertarContenedor(ActionEvent event){
+        ContenedoresBean bean = new ContenedoresBean();
+        
+        bean.setDescripcion(sessionScopeBeaninsumo.getDescripcionNuevoContenedor());
+        
+        lN_SFContenedoresRemote.insertContenedor(bean);
+        
+        sessionScopeBeaninsumo.setListaContenedores(this.llenarcontenedoresComno());
+        
+        Utils.addTargetMany(getContenedorInputBusqueda(),getInputnuevoTInsumoContenedor());
+        
+        getPopNuevoContenedor().hide();
+    }
+    
+    public void insertarMedida(ActionEvent event){
+        MedidaBean bean = new MedidaBean();
+        
+        bean.setDescripcion(sessionScopeBeaninsumo.getDescripcionNuevaMedida());
+        
+        lN_SFMedidaRemote.insertMedida(bean);
+        
+        sessionScopeBeaninsumo.setListaMedida(this.llenarmedidaComno());
+        
+        Utils.addTargetMany(getUmedidaInputBusqueda(),getInputnuevoTInsumoMedida());
+        
+        getPopnuevaMedida().hide();
+    }
+    
+    public void imageUpload(ValueChangeEvent valueChangeEvent) {
+        try{
+            UploadedFile file = (UploadedFile) valueChangeEvent.getNewValue();
+            InputStream inputStream1 = file.getInputStream();
+            long fileSize = file.getLength() / (1024 * 1024);
+            
+            System.out.println(fileSize);
+            
+            if(file.getLength() > 1602864){//no mas de 1.5mb
+                FacesMessage fm = new FacesMessage("Imagen no puede pesar mas de 1.5 MB");
+                throw new ValidatorException(fm);
+            }
+            
+            if(Utils.validarExtensionImg(file.getFilename())){
+                System.out.println(file.getFilename());
+            }else{
+                FacesMessage fm = new FacesMessage("Imagen ingresada no es .png .jpg .jpeg");
+                throw new ValidatorException(fm);
+            }
+        }catch(Exception e){}
+    }
+    
     public void nuevoInsumo(ActionEvent event){
         String comentario = sessionScopeBeaninsumo.getComentarioNuevo();
         String codigo = sessionScopeBeaninsumo.getCodigoNuevo();
@@ -358,6 +443,8 @@ public class Frm_insumos {
         Utils.addTarget(getTbInsumos());
         Utils.addTarget(getCantInsumos());
         
+        sessionScopeBeaninsumo.setAlmacenEsc(false);
+        
     }
     
     public void cerrarPopNuevoInsumo(ActionEvent event){
@@ -398,6 +485,10 @@ public class Frm_insumos {
             
             sessionScopeBeaninsumo.setAlmacenedit(0);
             
+            sessionScopeBeaninsumo.setAlmacenEsc(false);
+            
+            Utils.clearRowSelection(getTbInsumos());
+            
             getPopEdit().hide();
         }
         
@@ -420,6 +511,8 @@ public class Frm_insumos {
             sessionScopeBeaninsumo.setInsumos(lN_SFInsumoRemote.getAllinsumos());
             getTbInsumos().setValue(sessionScopeBeaninsumo.getInsumos());
             Utils.addTarget(getTbInsumos()); 
+            
+            sessionScopeBeaninsumo.setAlmacenEsc(false);
             
             getPopEdit().hide();
         }
@@ -462,6 +555,10 @@ public class Frm_insumos {
         lN_SFTipoinsumoRemote.inserttInsumo(bean);
         
         this.limpiarPOPNuevotInsumo();
+        
+        sessionScopeBeaninsumo.setListaTipoinsumo(this.llenartipoInsumoComno());
+        
+        Utils.addTargetMany(getTinsumoInputBusqueda());
         
         getPopNuevoTInsumo().hide();
         
@@ -551,6 +648,8 @@ public class Frm_insumos {
         env.put(Context.PROVIDER_URL, "t3://127.0.0.1:7101");
         return new InitialContext(env);
     }
+    
+
 
     public void setSessionScopeBeaninsumo(bSessionScopeBeaninsumo sessionScopeBeaninsumo) {
         this.sessionScopeBeaninsumo = sessionScopeBeaninsumo;
@@ -847,5 +946,53 @@ public class Frm_insumos {
 
     public RichButton getBtnNuevotInsumo() {
         return btnNuevotInsumo;
+    }
+
+    public void setPopNuevoContenedor(RichPopup popNuevoContenedor) {
+        this.popNuevoContenedor = popNuevoContenedor;
+    }
+
+    public RichPopup getPopNuevoContenedor() {
+        return popNuevoContenedor;
+    }
+
+    public void setBtnNuevoContenedor(RichButton btnNuevoContenedor) {
+        this.btnNuevoContenedor = btnNuevoContenedor;
+    }
+
+    public RichButton getBtnNuevoContenedor() {
+        return btnNuevoContenedor;
+    }
+
+    public void setPopnuevaMedida(RichPopup popnuevaMedida) {
+        this.popnuevaMedida = popnuevaMedida;
+    }
+
+    public RichPopup getPopnuevaMedida() {
+        return popnuevaMedida;
+    }
+
+    public void setBtnNuevaMedida(RichButton btnNuevaMedida) {
+        this.btnNuevaMedida = btnNuevaMedida;
+    }
+
+    public RichButton getBtnNuevaMedida() {
+        return btnNuevaMedida;
+    }
+
+    public void setInputnuevoTInsumoContenedor(RichSelectOneChoice inputnuevoTInsumoContenedor) {
+        this.inputnuevoTInsumoContenedor = inputnuevoTInsumoContenedor;
+    }
+
+    public RichSelectOneChoice getInputnuevoTInsumoContenedor() {
+        return inputnuevoTInsumoContenedor;
+    }
+
+    public void setInputnuevoTInsumoMedida(RichSelectOneChoice inputnuevoTInsumoMedida) {
+        this.inputnuevoTInsumoMedida = inputnuevoTInsumoMedida;
+    }
+
+    public RichSelectOneChoice getInputnuevoTInsumoMedida() {
+        return inputnuevoTInsumoMedida;
     }
 }

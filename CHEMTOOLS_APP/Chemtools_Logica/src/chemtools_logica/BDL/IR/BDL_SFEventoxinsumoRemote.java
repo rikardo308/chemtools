@@ -19,4 +19,6 @@ public interface BDL_SFEventoxinsumoRemote {
     List<Eventoxinsumo> getEventoxinsumoFindAll();
     
     List<Eventoxinsumo> getInsumosporAlmacenActivo(int nidAlmacen);
+    
+    List<Eventoxinsumo> getInsumosGenerales();
 }

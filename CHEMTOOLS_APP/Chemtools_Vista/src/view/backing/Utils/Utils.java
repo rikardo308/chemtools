@@ -283,7 +283,7 @@ public class Utils {
         return label;
     }
     
-    public void clearRowSelection(RichTable table) {
+    public static void clearRowSelection(RichTable table) {
         //Clearing the selected rows using table API 
         table.getSelectedRowKeys().clear();
 

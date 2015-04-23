@@ -6,6 +6,7 @@ import chemtools_logica.BDL.IR.BDL_SFIsumoRemote;
 import chemtools_logica.Beans.InsumoBean;
 
 import chemtools_logica.Entidades.Almacen;
+import chemtools_logica.Entidades.Eventoxinsumo;
 import chemtools_logica.Entidades.Insumo;
 
 import java.util.ArrayList;
@@ -55,133 +56,82 @@ public class BDL_SFIsumoBean implements BDL_SFIsumoRemote, BDL_SFIsumoLocal {
     
     public List<Insumo> busquedaInsumo(InsumoBean bean){
         List<Insumo> listaInsumos = new ArrayList<Insumo>();
-        String ejbQuery = "SELECT u.insumo FROM Eventoxinsumo u " +
-                          "WHERE 1 = 1 ";
-        if(bean.getIdInsumo() != null){
-            ejbQuery += "AND u.insumo.idInsumo like :codigo";
-        }
-        if(bean.getComentario() != null){
-            ejbQuery += "AND u.insumo.comentario like :nombre ";
-        }
-        if(bean.getIdunidadMeidad() != 0){
-            ejbQuery += "AND u.insumo.tipoinsumo.medida.idMedida = :uMedida ";
-        }
-        if(bean.getIdtipoInsumo() != 0){
-            ejbQuery += "AND u.insumo.tipoinsumo.idTipoInsumo = :tInsumo ";
-        }
-        if(bean.getIdcontenedor() != 0){
-            ejbQuery += "AND u.insumo.tipoinsumo.contenedores.idContenedores = :contenedor ";
-        }
-        if(bean.getIdAlmacen() != 0){
-            ejbQuery += "AND u.almacen.idAlmacen = :nidAlmacen ";
-        }
-        if(bean.getIdEmpresa() != 0){
-            ejbQuery += "AND u.insumo.empresa.idEmpresa = :nidEmpresa ";
-        }
-        if(bean.getCalidad() != 0){
-            ejbQuery += "AND u.insumo.calidad = :calidad ";
-        }
+
+        List<Eventoxinsumo> evento = new ArrayList<Eventoxinsumo>();
+        
+        String ejbQuery1 ="SELECT ins.* "+
+                            "FROM eventoxinsumo t1 " +
+                          
+                            "INNER JOIN insumo AS ins ON t1.idInsumo = ins.idInsumo " +
+                            "INNER JOIN almacen AS alm ON t1.idAlmacen = alm.idAlmacen "+
+                            "INNER JOIN tipoinsumo AS tins ON ins.idTipoInsumo = tins.idTipoInsumo "+
+                            "INNER JOIN empresa AS emp ON ins.idEmpresa = emp.idEmpresa "+
+                            "INNER JOIN medida AS med ON tins.idMedida = med.idMedida "+
+                            "INNER JOIN contenedores AS cont ON tins.idContenedores = cont.idContenedores "+
+                          
+                            "INNER JOIN "+
+                            "( "+
+                              "SELECT MAX(Fecha_Evento) maxdate, idInsumo,idUsuario "+
+                              "FROM eventoxinsumo "+
+                              "GROUP BY idInsumo "+
+                            ") t2 "+
+                              "ON t1.idInsumo = t2.idInsumo "+
+                              "AND t1.Fecha_Evento = t2.maxdate ";
+            
+                            if(bean.getIdInsumo() != null){
+                                ejbQuery1 += "AND ins.idInsumo like '%"+bean.getIdInsumo()+"%' ";
+                            }
+                            if(bean.getComentario() != null){
+                                ejbQuery1 += "AND ins.Comentario like '%"+bean.getComentario()+"%' ";
+                            }
+                            if(bean.getIdunidadMeidad() != 0){
+                                ejbQuery1 += "AND med.idMedida = "+bean.getIdunidadMeidad()+" ";
+                            }
+                            if(bean.getIdtipoInsumo() != 0){
+                                ejbQuery1 += "AND tins.idTipoInsumo = "+bean.getIdtipoInsumo()+" ";
+                            }
+                            if(bean.getIdcontenedor() != 0){
+                                ejbQuery1 += "AND cont.idContenedores = "+bean.getIdcontenedor()+" ";
+                            }
+                            if(bean.getIdAlmacen() != 0){
+                                ejbQuery1 += "AND alm.idAlmacen = "+bean.getIdAlmacen()+" ";
+                            }
+                            if(bean.getIdEmpresa() != 0){
+                                ejbQuery1 += "AND emp.idEmpresa = "+bean.getIdEmpresa()+" ";
+                            }
+                            if(bean.getCalidad() != 0){
+                                ejbQuery1 += "AND ins.Calidad = "+bean.getCalidad()+" ";
+                            }
         
         
-        if(bean.getFechaCreaciondMin() != null || bean.getFechaCreaciondMax() != null){
-            
-            if(bean.getFechaCreaciondMin() == null && bean.getFechaCreaciondMax() != null){
-                ejbQuery += "AND u.insumo.fecha_Creacion <= :fCreacionMax ";
-            }
-            
-            else if(bean.getFechaCreaciondMin() != null && bean.getFechaCreaciondMax() == null){
-                ejbQuery += "AND u.insumo.fecha_Creacion >= :fCreacionMin ";
-            }
-            
-            else{
-                ejbQuery += "AND u.insumo.fecha_Creacion BETWEEN :fCreacionMin AND :fCreacionMax ";
-            } 
-            
-        }
+                            if(bean.getFechaCreaciondMin() != null || bean.getFechaCreaciondMax() != null){
+                                
+                                if(bean.getFechaCreaciondMax() != null){
+                                    ejbQuery1 += "AND ins.Fecha_Creacion >= '"+bean.getFechaCreaciondMax()+"' ";
+                                }
+                                
+                                if(bean.getFechaCreaciondMin() != null){
+                                    ejbQuery1 += "AND ins.Fecha_Creacion <= '"+bean.getFechaCreaciondMin()+"' ";
+                                }
+                                
+                            }
         
         
-        if(bean.getFechaCaducidadMin() != null || bean.getFechaCaducidadMax() != null){
-                
-                if(bean.getFechaCaducidadMin() == null && bean.getFechaCaducidadMax() != null){
-                    ejbQuery += "AND u.insumo.fecha_Caducacion <= :fCaducacionMax ";
-                }
-                
-                else if(bean.getFechaCaducidadMin() != null && bean.getFechaCaducidadMax() == null){
-                    ejbQuery += "AND u.insumo.fecha_Caducacion >= :fCaducacionMin ";
-                }
-                
-                else{
-                    ejbQuery += "AND u.insumo.fecha_Caducacion BETWEEN :fCaducacionMin AND :fCaducacionMax ";
-                } 
-                
-        }
+                            if(bean.getFechaCaducidadMin() != null || bean.getFechaCaducidadMax() != null){
+                                    
+                                    if(bean.getFechaCaducidadMax() != null){
+                                        ejbQuery1 += "AND ins.Fecha_Caducacion <= '"+bean.getFechaCaducidadMax()+"' ";
+                                    }
+                                    
+                                    if(bean.getFechaCaducidadMin() != null){
+                                        ejbQuery1 += "AND ins.Fecha_Caducacion >= '"+bean.getFechaCaducidadMin()+"' ";
+                                    }
+                                    
+                            }
         
         
         try{
-            Query query = em.createQuery(ejbQuery);
-            
-            if(bean.getIdInsumo() != null){
-                query.setParameter("codigo", "%"+bean.getIdInsumo()+"%");
-            }
-            if(bean.getComentario() != null){
-                query.setParameter("nombre", "%"+bean.getComentario()+"%");
-            }
-            if(bean.getIdunidadMeidad() != 0){
-                query.setParameter("uMedida", bean.getIdunidadMeidad());
-            }
-            if(bean.getIdtipoInsumo() != 0){
-                query.setParameter("tInsumo", bean.getIdtipoInsumo());
-            }
-            if(bean.getIdcontenedor() != 0){
-                query.setParameter("contenedor", bean.getIdcontenedor());
-            }
-            if(bean.getIdAlmacen() != 0){
-                query.setParameter("nidAlmacen", bean.getIdAlmacen());
-            }
-            if(bean.getIdEmpresa() != 0){
-                query.setParameter("nidEmpresa", bean.getIdEmpresa());
-            }
-            if(bean.getCalidad() != 0){
-                query.setParameter("calidad", bean.getCalidad());
-            }
-            
-            
-            if(bean.getFechaCreaciondMin() != null || bean.getFechaCreaciondMax() != null){
-                
-                if(bean.getFechaCreaciondMin() == null && bean.getFechaCreaciondMax() != null){
-                    query.setParameter("fCreacionMax", bean.getFechaCreaciondMax());
-                }
-                
-                else if(bean.getFechaCreaciondMin() != null && bean.getFechaCreaciondMax() == null){
-                    query.setParameter("fCreacionMin", bean.getFechaCreaciondMin());
-                }
-                
-                else{
-                    query.setParameter("fCreacionMin", bean.getFechaCreaciondMin());
-                    query.setParameter("fCreacionMax", bean.getFechaCreaciondMax());
-                } 
-                
-            }
-            
-            
-            if(bean.getFechaCaducidadMin() != null || bean.getFechaCaducidadMax() != null){
-                    
-                    if(bean.getFechaCaducidadMin() == null && bean.getFechaCaducidadMax() != null){
-                        query.setParameter("fCaducacionMax", bean.getFechaCaducidadMax());
-                    }
-                    
-                    else if(bean.getFechaCaducidadMin() != null && bean.getFechaCaducidadMax() == null){
-                        query.setParameter("fCaducacionMin", bean.getFechaCaducidadMin());
-                    }
-                    
-                    else{
-                        query.setParameter("fCaducacionMin", bean.getFechaCaducidadMin());
-                        query.setParameter("fCaducacionMax", bean.getFechaCaducidadMax());
-                    } 
-                    
-            }
-            
-            
+            Query query = em.createNativeQuery(ejbQuery1, Insumo.class);            
             listaInsumos = query.getResultList();
         }catch(Exception e)
         {

@@ -10,4 +10,6 @@ import javax.ejb.Remote;
 public interface LN_SFContenedoresRemote {
     
     List<ContenedoresBean> getContenedoresActivos();
+    
+    void insertContenedor(ContenedoresBean bean);
 }

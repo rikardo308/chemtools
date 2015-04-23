@@ -10,4 +10,6 @@ import javax.ejb.Local;
 public interface LN_SFMedidaLocal {
     
     List<MedidaBean> allMedidas();
+    
+    void insertMedida(MedidaBean bean);
 }

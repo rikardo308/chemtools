@@ -26,6 +26,8 @@ public class bSessionScopeBeaninsumo implements Serializable{
     UsuarioBean usuario = new UsuarioBean();
     private Date fechaMinima = new Date();
     private String directorio = "INSUMOS GENERALES";
+    
+    private boolean almacenEsc = false;
 
     //LISTAS
     private List<AlmacenBean> almacenesActios = new ArrayList<AlmacenBean>();
@@ -100,6 +102,10 @@ public class bSessionScopeBeaninsumo implements Serializable{
     private String tExpiracionNuevotInsumo;
     private int contenedorNuevotInsumo;
     private int uMedidaNuevotInsumo;
+    
+    //NUEVO CONTENEDO Y MEDIDA
+    private String descripcionNuevoContenedor;
+    private String descripcionNuevaMedida;
 
     public void setAlmacenesActios(List<AlmacenBean> almacenesActios) {
         this.almacenesActios = almacenesActios;
@@ -557,5 +563,29 @@ public class bSessionScopeBeaninsumo implements Serializable{
 
     public int getUMedidaNuevotInsumo() {
         return uMedidaNuevotInsumo;
+    }
+
+    public void setAlmacenEsc(boolean almacenEsc) {
+        this.almacenEsc = almacenEsc;
+    }
+
+    public boolean isAlmacenEsc() {
+        return almacenEsc;
+    }
+
+    public void setDescripcionNuevoContenedor(String descripcionNuevoContenedor) {
+        this.descripcionNuevoContenedor = descripcionNuevoContenedor;
+    }
+
+    public String getDescripcionNuevoContenedor() {
+        return descripcionNuevoContenedor;
+    }
+
+    public void setDescripcionNuevaMedida(String descripcionNuevaMedida) {
+        this.descripcionNuevaMedida = descripcionNuevaMedida;
+    }
+
+    public String getDescripcionNuevaMedida() {
+        return descripcionNuevaMedida;
     }
 }
