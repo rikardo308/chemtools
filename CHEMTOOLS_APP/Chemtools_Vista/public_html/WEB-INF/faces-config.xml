@@ -50,4 +50,19 @@
     <validator-id>validator_CodInsumo</validator-id>
     <validator-class>view.backing.Utils.Validator.InsumoValidator</validator-class>
   </validator>
+  <managed-bean>
+    <managed-bean-name>Frm_transformaciones</managed-bean-name>
+    <managed-bean-class>view.backing.Transformaciones.Frm_transformaciones</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+      <?audit suppress oracle.ide.xml.validation-incomplete?>
+      <property-name>sessionScopeBeanTransformaciones</property-name>
+      <property-class>view.backing.Transformaciones.bSessionScopeBeanTransformaciones</property-class>
+    </managed-property>
+  </managed-bean>
+  <managed-bean>
+    <managed-bean-name>sessionScopeBeanTransformaciones</managed-bean-name>
+    <managed-bean-class>view.backing.Transformaciones.bSessionScopeBeanTransformaciones</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
 </faces-config>

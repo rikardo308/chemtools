@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
         xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+        
     <af:document title="Insumo" id="d1">
         <link rel="stylesheet" href="../recursos/css/bootstrap.min.css" media="screen"/>
          <link rel="stylesheet" href="../recursos/css/bootstrap-theme.min.css" media="screen"/>
@@ -177,6 +178,7 @@
                                                 <af:button text="Ver Imagen" disabled="true" inlineStyle="margin-right: 8px" binding="#{Frm_insumos.btnVerImagen}" actionListener="#{Frm_insumos.mostrarpopVerImagen}"/>
                                                 <af:button text="Nuevo T.Insumo" id="btnNuevoTinsum"
                                                            binding="#{Frm_insumos.btnNuevotInsumo}" actionListener="#{Frm_insumos.mostrarpopAgregarTInsumo}"/>
+                                                <af:button text="Cambio Almacen" actionListener="#{Frm_insumos.mostrarpopCambioAlmacen}" binding="#{Frm_insumos.btnCambioAlmacen}"/>
                                                 <br/>
                                             </af:panelGroupLayout>
                                             <br/>
@@ -286,11 +288,6 @@
                         <af:selectOneChoice required="true" value="#{sessionScopeBeaninsumo.empresaEdit}" autoSubmit="true" valueChangeListener="#{Frm_insumos.verificarCambiosEditTinsumo}" label="Empresa"
                                             binding="#{Frm_insumos.empresaInputNuevo}">
                                 <f:selectItems value="#{sessionScopeBeaninsumo.listaEmpresa}"/>
-                        </af:selectOneChoice>
-                        
-                        <af:selectOneChoice value="#{sessionScopeBeaninsumo.almacenedit}" visible="#{sessionScopeBeaninsumo.almacenEsc}" autoSubmit="true" valueChangeListener="#{Frm_insumos.verificarCambioAlmacenInsumo}" label="Almacen"
-                                            binding="#{Frm_insumos.almacenEdit}">
-                                <f:selectItems value="#{sessionScopeBeaninsumo.listaAlmacen}"/>
                         </af:selectOneChoice>
                         
                     </af:panelFormLayout>
@@ -432,6 +429,24 @@
                         <af:inputText value="#{sessionScopeBeaninsumo.descripcionNuevaMedida}" required="true" label="Descripcion"/>
                         
                         <af:button text="Guardar" actionListener="#{Frm_insumos.insertarMedida}"/>
+                    
+                    </af:panelFormLayout>
+                
+                </af:dialog>
+             
+             </af:popup>
+             
+             <af:popup binding="#{Frm_insumos.popCambioAlmacen}">
+             
+                <af:dialog type="none" resize="off" title="Cambio Almacen">
+                
+                    <af:panelFormLayout>
+                    
+                        <af:selectOneChoice value="#{sessionScopeBeaninsumo.almacenedit}" autoSubmit="true" valueChangeListener="#{Frm_insumos.verificarCambioAlmacenInsumo}" label="Almacen">
+                                <f:selectItems value="#{sessionScopeBeaninsumo.listaAlmacen}"/>
+                        </af:selectOneChoice>
+                        
+                        <af:button text="Guardar"/>
                     
                     </af:panelFormLayout>
                 

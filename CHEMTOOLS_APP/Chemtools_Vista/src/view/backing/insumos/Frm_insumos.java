@@ -124,6 +124,8 @@ public class Frm_insumos {
     private RichButton btnNuevaMedida;
     private RichSelectOneChoice inputnuevoTInsumoContenedor;
     private RichSelectOneChoice inputnuevoTInsumoMedida;
+    private RichPopup popCambioAlmacen;
+    private RichButton btnCambioAlmacen;
 
     public Frm_insumos(){    
     }
@@ -206,11 +208,11 @@ public class Frm_insumos {
         getBtnEditar().setDisabled(true);
         Utils.addTarget(getBtnEditar());
         getBtnVerImagen().setDisabled(true);
+        getBtnCambioAlmacen().setDisabled(true);
+        Utils.addTarget(getBtnCambioAlmacen());
         Utils.addTarget(getBtnVerImagen()); 
         Utils.addTarget(getDirectorio());
         Utils.addTarget(getCantInsumos());
-        
-        sessionScopeBeaninsumo.setAlmacenEsc(true);
         
         Utils.clearRowSelection(getTbInsumos());
     }
@@ -221,6 +223,8 @@ public class Frm_insumos {
         sessionScopeBeaninsumo.setInsumoSelecc(beanInsumo);
         getBtnEditar().setDisabled(false);
         getBtnVerImagen().setDisabled(false);
+        getBtnCambioAlmacen().setDisabled(false);
+        Utils.addTarget(getBtnCambioAlmacen());
         Utils.addTarget(getBtnEditar());
         Utils.addTarget(getBtnVerImagen());
     }
@@ -267,9 +271,10 @@ public class Frm_insumos {
         Utils.addTarget(getCantInsumos());
         Utils.addTarget(getDirectorio());
         
-        sessionScopeBeaninsumo.setNidAlmacenSelecc(0);
+        getBtnCambioAlmacen().setDisabled(true);
+        Utils.addTarget(getBtnCambioAlmacen());
         
-        sessionScopeBeaninsumo.setAlmacenEsc(false);
+        sessionScopeBeaninsumo.setNidAlmacenSelecc(0);
     }
     
     public void busquedaInsumo(ActionEvent event){
@@ -349,6 +354,10 @@ public class Frm_insumos {
     public void mostrarpopNuevaMedida(ActionEvent event){
         sessionScopeBeaninsumo.setDescripcionNuevaMedida("");
         Utils.showPopUpAFTER_START(getPopnuevaMedida(), getBtnNuevaMedida());
+    }
+    
+    public void mostrarpopCambioAlmacen(ActionEvent event){
+        Utils.showPopUpAFTER_START(getPopCambioAlmacen(), getBtnCambioAlmacen());
     }
     
     public void insertarContenedor(ActionEvent event){
@@ -443,8 +452,6 @@ public class Frm_insumos {
         Utils.addTarget(getTbInsumos());
         Utils.addTarget(getCantInsumos());
         
-        sessionScopeBeaninsumo.setAlmacenEsc(false);
-        
     }
     
     public void cerrarPopNuevoInsumo(ActionEvent event){
@@ -456,13 +463,17 @@ public class Frm_insumos {
     
     public void verificarCambioAlmacenInsumo(ValueChangeEvent vce){
         sessionScopeBeaninsumo.setCambioAlmacen(true);
+        
+        sessionScopeBeaninsumo.setInsumos(lN_SFInsumoRemote.getAllinsumos());
+        getTbInsumos().setValue(sessionScopeBeaninsumo.getInsumos());
+        sessionScopeBeaninsumo.setDirectorio("INSUMOS GENERALES");
+        Utils.addTarget(getTbInsumos());
+        Utils.addTarget(getCantInsumos());
+        Utils.addTarget(getDirectorio());
     }
-            
     
-    public void editarInsumo(ClientEvent ce){
-        
-        InsumoBean beanInsumo = sessionScopeBeaninsumo.getInsumoSelecc();
-        
+    public void cambiarAlmacen(ActionEvent event){
+        InsumoBean beanInsumo = sessionScopeBeaninsumo.getInsumoSelecc();  
         if(sessionScopeBeaninsumo.isCambioAlmacen() && sessionScopeBeaninsumo.getAlmacenedit() != 0){
             int usuario = sessionScopeBeaninsumo.getUsuario().getIdUsuario();
             int almacen = sessionScopeBeaninsumo.getAlmacenedit();
@@ -485,13 +496,16 @@ public class Frm_insumos {
             
             sessionScopeBeaninsumo.setAlmacenedit(0);
             
-            sessionScopeBeaninsumo.setAlmacenEsc(false);
-            
             Utils.clearRowSelection(getTbInsumos());
             
             getPopEdit().hide();
         }
+    }
+            
+    
+    public void editarInsumo(ClientEvent ce){
         
+        InsumoBean beanInsumo = sessionScopeBeaninsumo.getInsumoSelecc();        
         if(sessionScopeBeaninsumo.isCambioHecho()){
             beanInsumo.setEstado(sessionScopeBeaninsumo.getEstadoedit());
             beanInsumo.setCalidad(sessionScopeBeaninsumo.getCalidadedit());
@@ -511,8 +525,6 @@ public class Frm_insumos {
             sessionScopeBeaninsumo.setInsumos(lN_SFInsumoRemote.getAllinsumos());
             getTbInsumos().setValue(sessionScopeBeaninsumo.getInsumos());
             Utils.addTarget(getTbInsumos()); 
-            
-            sessionScopeBeaninsumo.setAlmacenEsc(false);
             
             getPopEdit().hide();
         }
@@ -994,5 +1006,21 @@ public class Frm_insumos {
 
     public RichSelectOneChoice getInputnuevoTInsumoMedida() {
         return inputnuevoTInsumoMedida;
+    }
+
+    public void setPopCambioAlmacen(RichPopup popCambioAlmacen) {
+        this.popCambioAlmacen = popCambioAlmacen;
+    }
+
+    public RichPopup getPopCambioAlmacen() {
+        return popCambioAlmacen;
+    }
+
+    public void setBtnCambioAlmacen(RichButton btnCambioAlmacen) {
+        this.btnCambioAlmacen = btnCambioAlmacen;
+    }
+
+    public RichButton getBtnCambioAlmacen() {
+        return btnCambioAlmacen;
     }
 }
