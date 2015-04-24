@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="frm_transformaciones.jsf" id="d1">
+        
+        <link rel="stylesheet" href="../recursos/css/bootstrap.min.css" media="screen"/>
+         <link rel="stylesheet" href="../recursos/css/bootstrap-theme.min.css" media="screen"/>
+         <link rel="stylesheet" href="../recursos/css/inicio.css" media="screen"/>
+         <link rel="stylesheet" href="../recursos/css/almacenes.css" media="screen"/>
+         <script src="../recursos/js/jquery.min.js"></script>
+         <script src="../recursos/js/bootstrap.min.js"></script>
+         
+        <af:form id="f1" binding="#{Frm_transformaciones.formTransformaciones}">
+        
+        <af:panelGridLayout id="pgl2">
+                <af:gridRow height="50px" id="gr2">
+                    <af:gridCell width="100%" halign="stretch" valign="stretch" id="gc1">
+                        <nav style="z-index: 10000" class="navbar navbar-default">
+                          <div class="container-fluid">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                              </button>
+                              <a class="navbar-brand" href="../seguridad/frm_inicio.jsf">ChemTools</a>
+                            </div>
+                        
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                              <ul class="nav navbar-nav">
+                        
+                              </ul>
+                              <ul class="nav navbar-nav navbar-right">
+                                <li><a href="../seguridad/frm_inicio.jsf">Inicio</a></li>
+                                <li><a href="#">Gestionar</a></li>
+                                <li><a href="#">Almacen</a></li>
+                                <li><a href="#">Formula</a></li>
+                                <li class="active"><a href="#">Insumos <span class="sr-only">(current)</span></a></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </nav>
+                    </af:gridCell>
+                </af:gridRow>
+                <af:gridRow height="100%" id="gr1">
+                    <af:gridCell width="100%" halign="stretch" valign="stretch" id="gc2">
+                        <af:panelSplitter orientation="horizontal" splitterPosition="200" id="ps1">
+                        
+                        
+                        
+                            
+                            
+                            <f:facet name="second">
+                                <af:panelGroupLayout layout="scroll">
+                                    <af:panelGroupLayout layout="scroll" inlineStyle="margin:0px 0px 0px 43px;">
+                                        <af:subform>
+                                        <br/>
+                                        <af:outputLabel value="Produccion"></af:outputLabel>
+                                            <af:panelGridLayout binding="#{Frm_insumos.pl_Busqueda}">
+                                            
+                                                <af:gridRow>
+                                                
+                                                    <af:gridCell>
+                                                    
+                                                        <af:panelFormLayout rows="2">
+                                                            <br/>
+                                                            <af:inputText binding="#{Frm_transformaciones.nombreLabInputBusqueda}" value="#{sessionScopeBeanTransformaciones.filtro.nombreLab}" label="Nombre del Laboratorio: "></af:inputText>
+                                                            <br/>
+                                                            <af:inputDate binding="#{Frm_transformaciones.fecIniInputDateBusqueda}" value="#{sessionScopeBeanTransformaciones.filtro.fecIni}" label="Fecha Inicial: "></af:inputDate>
+                                                            <br/>
+                                                            <af:inputDate binding="#{Frm_transformaciones.fecFinInputDateBusqueda}" value="#{sessionScopeBeanTransformaciones.filtro.fecFin}" label="Fecha Final:"></af:inputDate>
+                                                            <br/>
+                                                            <af:selectOneChoice binding="#{Frm_transformaciones.estadoSelectOneChoiceBusqueda}" value="#{sessionScopeBeanTransformaciones.filtro.estado}" label="Estado: ">
+                                                                <f:selectItem itemValue="0" itemLabel="Seleccione"/>
+                                                                <f:selectItem itemValue="1" itemLabel="Pendiente"/>
+                                                                <f:selectItem itemValue="2" itemLabel="Incompleta"/>
+                                                            </af:selectOneChoice>
+                                                            <br/>
+                                                        </af:panelFormLayout>
+                                                    </af:gridCell>
+                                                </af:gridRow>
+                                            </af:panelGridLayout>
+                                            <af:panelGroupLayout>
+                                                <af:button text="Buscar"
+                                                           actionListener="#{Frm_transformaciones.busquedaOrdenesProduccion}" inlineStyle="margin-right: 8px"/>
+                                                <af:button text="Limpiar/Refrescar" actionListener="#{Frm_insumos.limpiaryRefrescar}" inlineStyle="margin-right: 8px"/>
+                                                <br/>
+                                            </af:panelGroupLayout>
+                                            <br/>
+                                        </af:subform>
+                                    </af:panelGroupLayout>
+                                    <af:outputLabel value="CANTIDAD DE INSUMOS: #{sessionScopeBeaninsumo.insumos.size()}"
+                                                    binding="#{Frm_insumos.cantInsumos}"/>
+                                    
+                                    <af:table rowSelection="single" emptyText="No hay Ordenes Pendientes"
+                                              binding="#{Frm_transformaciones.tableOrdenesResultado}"
+                                              id="tableOrdenesResultado" var="ord" value="#{sessionScopeBeanTransformaciones.ordenesMostradas}"
+                                              selectionListener="#{Frm_insumos.selectInsumo}">
+                                        <af:column frozen="true" id="c0" width="80"
+                                                   sortProperty="Id de Orden de Produccion" sortable="true" headerText="Codigo">
+                                            <af:outputText id="IdOrdProd" value="#{ord.idOrdenProduccion}"/>
+                                        </af:column>
+                                        <af:column id="c1" sortProperty="id"
+                                                   sortable="false" headerText="Descripcion">
+                                            <af:outputText id="id" value="#{ord.comentario}"/>
+                                        </af:column>
+                                        <af:column sortProperty="id" sortable="false"
+                                                   headerText="Estado">
+                                            <af:outputText value="#{ord.estado}"/>
+                                        </af:column>
+                                        <af:column sortProperty="id" sortable="false"
+                                                   headerText="F. Registro">
+                                            <af:outputText value="#{ord.fechaRegistro}">
+                                                <af:convertDateTime dateStyle="medium" pattern="dd-MM-yyyy"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column sortProperty="id" sortable="false"
+                                                   headerText="Creador">
+                                            <af:outputText value="#{ord.usuario.nombre_Usuario}"/>
+                                        </af:column>
+                                        
+                                        </af:table>
+                                </af:panelGroupLayout>
+                            </f:facet>
+                            
+                            
+                        </af:panelSplitter>
+                    </af:gridCell>
+                </af:gridRow>
+            </af:panelGridLayout>   
+            
+             
+        </af:form>
+    </af:document>
+</f:view>
