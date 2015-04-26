@@ -208,7 +208,7 @@ CREATE TABLE `eventoxinsumo` (
   CONSTRAINT `fk_eventoxinsumo_insumo1` FOREIGN KEY (`idInsumo`) REFERENCES `insumo` (`idInsumo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_eventoxinsumo_usuario1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_evento_has_insumo_evento1` FOREIGN KEY (`idEvento`) REFERENCES `evento` (`idEvento`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -677,7 +677,7 @@ DROP TABLE IF EXISTS `tipoinsumo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tipoinsumo` (
-  `idTipoInsumo` int(11) NOT NULL AUTO_INCREMENT,
+  `idTipoInsumo` int(11) NOT NULL,
   `idContenedores` int(11) NOT NULL,
   `idMedida` int(11) NOT NULL,
   `Descripcion` varchar(45) DEFAULT NULL,
@@ -691,7 +691,7 @@ CREATE TABLE `tipoinsumo` (
   KEY `fk_tipoinsumo_medida1_idx` (`idMedida`),
   CONSTRAINT `fk_tipoinsumo_contenedores1` FOREIGN KEY (`idContenedores`) REFERENCES `contenedores` (`idContenedores`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tipoinsumo_medida1` FOREIGN KEY (`idMedida`) REFERENCES `medida` (`idMedida`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -700,7 +700,7 @@ CREATE TABLE `tipoinsumo` (
 
 LOCK TABLES `tipoinsumo` WRITE;
 /*!40000 ALTER TABLE `tipoinsumo` DISABLE KEYS */;
-INSERT INTO `tipoinsumo` VALUES (1,1,1,'TIP_1',1,'tip','1','1',1),(2,1,1,'nuevo',1,'nuevo','12','12',12),(3,1,1,'nuevo',1,'nuevo','12','12',12),(4,1,1,'nuevo1',1,'nuevo1','12','12',23),(5,1,1,'feef',1,'fefe','23','2323',323),(6,1,1,'feef',1,'feef','23','32',32),(7,1,1,'feef',1,'fefe','12','23',32),(8,1,1,'fe',1,'fe','12','12',12),(9,1,1,'fe',1,'fe','1.4','3.5',23),(10,1,1,'holiiii',1,'fe','1.4','3.5',23),(11,1,1,'holiiii',1,'fe','1.4','3.5',23),(12,1,1,'fefe',1,'fefe','2','1',2),(13,1,1,'fefe',1,'fefe','2','1',2),(14,1,1,'feeffe',1,'feefef','12','12',12);
+INSERT INTO `tipoinsumo` VALUES (1,1,1,'TIP_1',1,'tip','1','1',1);
 /*!40000 ALTER TABLE `tipoinsumo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -866,4 +866,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-22 19:36:09
+-- Dump completed on 2015-04-22  5:20:07
