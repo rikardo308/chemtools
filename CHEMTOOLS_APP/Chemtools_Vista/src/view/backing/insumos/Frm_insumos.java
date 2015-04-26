@@ -504,7 +504,6 @@ public class Frm_insumos {
                 listaEvento.add(eInsumoSalida);
                 listaEvento.add(eInsumoEntrada);          
             
-           
             lN_SFInsumoRemote.cambioInsumoAlmacen(listaEvento);  
             
 
