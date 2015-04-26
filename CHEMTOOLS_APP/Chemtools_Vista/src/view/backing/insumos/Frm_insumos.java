@@ -486,7 +486,7 @@ public class Frm_insumos {
             int almacenSalida = sessionScopeBeaninsumo.getAlmacenSeleccionado().getIdAlmacen();
             
             Date fechaSalida  = new Date();
-            Date fechaEntrada = Utils.addTimeBySeconds(fechaSalida, 2);
+            Date fechaEntrada = Utils.addTimeBySecondsDemo(fechaSalida, 2);
             
             EventoxinsumoBean eInsumoSalida = new EventoxinsumoBean();
                 eInsumoSalida.setFecha_Evento(fechaSalida);
