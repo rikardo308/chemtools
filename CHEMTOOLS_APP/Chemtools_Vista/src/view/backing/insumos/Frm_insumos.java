@@ -504,6 +504,7 @@ public class Frm_insumos {
                 listaEvento.add(eInsumoEntrada);          
             
             lN_SFInsumoRemote.cambioInsumoAlmacen(listaEvento);  
+            
 
             sessionScopeBeaninsumo.setCambioAlmacen(false);
             
