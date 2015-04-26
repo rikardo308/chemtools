@@ -506,7 +506,8 @@ public class Frm_insumos {
             
             lN_SFInsumoRemote.cambioInsumoAlmacen(listaEvento);  
             
-
+            //prueba
+            
             sessionScopeBeaninsumo.setCambioAlmacen(false);
             
             sessionScopeBeaninsumo.setInsumos(lN_SFInsumoRemote.getAllinsumos());
