@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
@@ -56,6 +57,7 @@ import oracle.adf.view.rich.component.rich.layout.RichPanelGridLayout;
 import oracle.adf.view.rich.component.rich.layout.RichPanelGroupLayout;
 import oracle.adf.view.rich.component.rich.nav.RichButton;
 import oracle.adf.view.rich.component.rich.output.RichImage;
+import oracle.adf.view.rich.component.rich.output.RichMessage;
 import oracle.adf.view.rich.component.rich.output.RichOutputLabel;
 import oracle.adf.view.rich.render.ClientEvent;
 
@@ -163,7 +165,7 @@ public class Frm_insumos {
     
     public void busquedaAlmacen(ActionEvent event){
         
-        sessionScopeBeaninsumo.setEmpresaSeleccionada(null);
+        sessionScopeBeaninsumo.setAlmacenSeleccionado(null);
         
         String nombre = sessionScopeBeaninsumo.getNombreBusquedaAlmacen();
         
@@ -190,11 +192,9 @@ public class Frm_insumos {
     
     public void traeInsumos(ActionEvent event){
         
-        int nidAlmacen = sessionScopeBeaninsumo.getEmpresaSeleccionada().getIdAlmacen();
+        int nidAlmacen = sessionScopeBeaninsumo.getAlmacenSeleccionado().getIdAlmacen();
         
-        String nombre =sessionScopeBeaninsumo.getEmpresaSeleccionada().getNombre();
-        
-        System.out.println("NID: "+nidAlmacen);
+        String nombre =sessionScopeBeaninsumo.getAlmacenSeleccionado().getNombre();
         
         sessionScopeBeaninsumo.setDirectorio("INSUMOS DE "+nombre);
         
@@ -202,6 +202,7 @@ public class Frm_insumos {
         getTbInsumos().setValue(sessionScopeBeaninsumo.getInsumos());
         Utils.addTarget(getTbInsumos());
         sessionScopeBeaninsumo.setNidAlmacenSelecc(nidAlmacen);
+        sessionScopeBeaninsumo.setAlmacenedit(nidAlmacen);
        
         getBtnAgregar().setDisabled(false);
         Utils.addTarget(getBtnAgregar());
@@ -223,10 +224,14 @@ public class Frm_insumos {
         sessionScopeBeaninsumo.setInsumoSelecc(beanInsumo);
         getBtnEditar().setDisabled(false);
         getBtnVerImagen().setDisabled(false);
-        getBtnCambioAlmacen().setDisabled(false);
-        Utils.addTarget(getBtnCambioAlmacen());
+        
         Utils.addTarget(getBtnEditar());
         Utils.addTarget(getBtnVerImagen());
+        
+        if(sessionScopeBeaninsumo.getAlmacenedit() != 0){
+            getBtnCambioAlmacen().setDisabled(false);
+            Utils.addTarget(getBtnCambioAlmacen());
+        }
     }
     
     public void limpiaryRefrescar(ActionEvent event){
@@ -452,6 +457,8 @@ public class Frm_insumos {
         Utils.addTarget(getTbInsumos());
         Utils.addTarget(getCantInsumos());
         
+        Utils.showMessage("Se Ingreso un nuevo Insumo", null, 2);
+        
     }
     
     public void cerrarPopNuevoInsumo(ActionEvent event){
@@ -463,30 +470,44 @@ public class Frm_insumos {
     
     public void verificarCambioAlmacenInsumo(ValueChangeEvent vce){
         sessionScopeBeaninsumo.setCambioAlmacen(true);
-        
-        sessionScopeBeaninsumo.setInsumos(lN_SFInsumoRemote.getAllinsumos());
-        getTbInsumos().setValue(sessionScopeBeaninsumo.getInsumos());
-        sessionScopeBeaninsumo.setDirectorio("INSUMOS GENERALES");
-        Utils.addTarget(getTbInsumos());
-        Utils.addTarget(getCantInsumos());
-        Utils.addTarget(getDirectorio());
     }
+    
+    
     
     public void cambiarAlmacen(ActionEvent event){
         InsumoBean beanInsumo = sessionScopeBeaninsumo.getInsumoSelecc();  
-        if(sessionScopeBeaninsumo.isCambioAlmacen() && sessionScopeBeaninsumo.getAlmacenedit() != 0){
-            int usuario = sessionScopeBeaninsumo.getUsuario().getIdUsuario();
-            int almacen = sessionScopeBeaninsumo.getAlmacenedit();
+        if(sessionScopeBeaninsumo.isCambioAlmacen() && sessionScopeBeaninsumo.getAlmacenedit() != 0 && beanInsumo.getEstado() == 1){
             
-            EventoxinsumoBean eInsumo = new EventoxinsumoBean();
-                eInsumo.setFecha_Evento(new Date());
-                eInsumo.setIdEvento(2);
-                eInsumo.setIdUsuario(usuario);
-                eInsumo.setIdAlmacen(almacen);
-                eInsumo.setInsumo(beanInsumo);
+            
+            
+            
+            int usuario = sessionScopeBeaninsumo.getUsuario().getIdUsuario();
+            int almacenEntrada = sessionScopeBeaninsumo.getAlmacenedit();
+            int almacenSalida = sessionScopeBeaninsumo.getAlmacenSeleccionado().getIdAlmacen();
+            
+            Date fechaSalida  = new Date();
+            Date fechaEntrada = Utils.addTimeBySeconds(fechaSalida, 2);
+            
+            EventoxinsumoBean eInsumoSalida = new EventoxinsumoBean();
+                eInsumoSalida.setFecha_Evento(fechaSalida);
+                eInsumoSalida.setIdEvento(4);
+                eInsumoSalida.setIdUsuario(usuario);
+                eInsumoSalida.setIdAlmacen(almacenSalida);
+                eInsumoSalida.setInsumo(beanInsumo);
+            
+            EventoxinsumoBean eInsumoEntrada = new EventoxinsumoBean();
+                eInsumoEntrada.setFecha_Evento(fechaEntrada);
+                eInsumoEntrada.setIdEvento(3);
+                eInsumoEntrada.setIdUsuario(usuario);
+                eInsumoEntrada.setIdAlmacen(almacenEntrada);
+                eInsumoEntrada.setInsumo(beanInsumo);
                 
-                lN_SFInsumoRemote.cambioInsumoAlmacen(eInsumo);
-            sessionScopeBeaninsumo.setAlmacenedit(0);
+            List<EventoxinsumoBean> listaEvento = new ArrayList<EventoxinsumoBean>();
+                listaEvento.add(eInsumoSalida);
+                listaEvento.add(eInsumoEntrada);          
+            
+            lN_SFInsumoRemote.cambioInsumoAlmacen(listaEvento);  
+                //lN_SFInsumoRemote.cambioInsumoAlmacen(eInsumo);
 
             sessionScopeBeaninsumo.setCambioAlmacen(false);
             
@@ -496,9 +517,17 @@ public class Frm_insumos {
             
             sessionScopeBeaninsumo.setAlmacenedit(0);
             
-            Utils.clearRowSelection(getTbInsumos());
+            //Utils.clearRowSelection(getTbInsumos());
             
-            getPopEdit().hide();
+            getPopCambioAlmacen().hide();
+        }else if(beanInsumo.getEstado() != 1){
+            getPopCambioAlmacen().hide();
+            
+            Utils.showMessage("Seleccione un insumo Activo para el cambio de almacen",null,1);
+            
+            sessionScopeBeaninsumo.setCambioAlmacen(false);
+            
+            sessionScopeBeaninsumo.setAlmacenedit(sessionScopeBeaninsumo.getAlmacenSeleccionado().getIdAlmacen());
         }
     }
             
@@ -573,6 +602,8 @@ public class Frm_insumos {
         Utils.addTargetMany(getTinsumoInputBusqueda());
         
         getPopNuevoTInsumo().hide();
+        
+        Utils.showMessage("Se Ingreso un nuevo Tipo de Insumo", null, 2);
         
         
     }

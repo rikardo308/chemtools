@@ -12,8 +12,7 @@ public class LaboratorioBean implements Serializable{
     private String direccion;
     private int estado;
     private String nombre_Encargado;
-    private String ruc;
-    private String razon_Social;
+    private String nombre;
     private int idDepartamento;
     private int idDistrito;
     private int idLaboratorio;
@@ -45,20 +44,12 @@ public class LaboratorioBean implements Serializable{
         return nombre_Encargado;
     }
 
-    public void setRuc(String ruc) {
-        this.ruc = ruc;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getRuc() {
-        return ruc;
-    }
-
-    public void setRazon_Social(String razon_Social) {
-        this.razon_Social = razon_Social;
-    }
-
-    public String getRazon_Social() {
-        return razon_Social;
+    public String getNombre() {
+        return nombre;
     }
 
     public void setIdDepartamento(int idDepartamento) {

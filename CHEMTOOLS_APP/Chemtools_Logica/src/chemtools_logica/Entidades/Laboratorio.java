@@ -24,9 +24,8 @@ public class Laboratorio implements Serializable {
     private int estado;
     @Column(name = "Nombre_Encargado")
     private String nombre_Encargado;
-    private String ruc;
-    @Column(name = "Razon_Social")
-    private String razon_Social;
+    @Column(name = "Nombre")
+    private String nombre;
     @Column(name = "idDepartamento")
     private int idDepartamento;
     @Column(name = "idDistrito")
@@ -43,7 +42,7 @@ public class Laboratorio implements Serializable {
     }
 
     public Laboratorio(String direccion, int estado, int idDepartamento, int idDistrito, int idLaboratorio,
-                       int idProvicia, String nombre_Encargado, String razon_Social, String ruc) {
+                       int idProvicia, String nombre_Encargado, String nombre) {
         this.direccion = direccion;
         this.estado = estado;
         this.idDepartamento = idDepartamento;
@@ -51,8 +50,7 @@ public class Laboratorio implements Serializable {
         this.idLaboratorio = idLaboratorio;
         this.idProvicia = idProvicia;
         this.nombre_Encargado = nombre_Encargado;
-        this.razon_Social = razon_Social;
-        this.ruc = ruc;
+        this.nombre = nombre;
     }
 
     public String getDireccion() {
@@ -79,20 +77,12 @@ public class Laboratorio implements Serializable {
         this.nombre_Encargado = nombre_Encargado;
     }
 
-    public String getRuc() {
-        return ruc;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void setRuc(String ruc) {
-        this.ruc = ruc;
-    }
-
-    public String getRazon_Social() {
-        return razon_Social;
-    }
-
-    public void setRazon_Social(String razon_Social) {
-        this.razon_Social = razon_Social;
+    public String getNombre() {
+        return nombre;
     }
 
     public int getIdDepartamento() {

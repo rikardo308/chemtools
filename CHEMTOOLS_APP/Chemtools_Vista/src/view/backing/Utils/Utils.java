@@ -1,8 +1,13 @@
 package view.backing.Utils;
 
+import java.io.IOException;
+
 import java.math.BigDecimal;
 
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +17,7 @@ import java.util.Random;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UISelectItems;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -294,5 +300,46 @@ public class Utils {
                 "selectedRowKeys", new RowKeySetImpl());
         RequestContext.getCurrentInstance().getChangeManager().
             addComponentChange(FacesContext.getCurrentInstance(),table, rks);
+    }
+    
+    public static void showMessage(String mensaje,UIComponent componente , int tipo){
+        FacesMessage fm = new  FacesMessage(mensaje);
+        
+        if(tipo == 1){
+            fm.setSeverity(FacesMessage.SEVERITY_ERROR);
+        }
+        if(tipo == 2){
+            fm.setSeverity(FacesMessage.SEVERITY_INFO);
+        }
+        if(tipo == 3){
+            fm.setSeverity(FacesMessage.SEVERITY_WARN);
+        }
+        if(tipo == 3){
+            fm.setSeverity(FacesMessage.SEVERITY_FATAL);
+        }
+        
+        if(componente != null){
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(componente.getClientId(context), fm);
+        }
+        else{
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, fm);
+        }
+    }
+    
+    public static Date addTimeBySeconds(Date date,int seg){
+        int sec = seg * 1000;
+        date.setSeconds(date.getSeconds() + sec);
+        return date;
+    }
+    
+    public static Date addTimeBySecondsDemo(Date date,int sec){
+        Calendar calender = Calendar.getInstance();
+        calender.setTimeInMillis(date.getTime());
+        calender.add(Calendar.SECOND, sec);
+        Date changeDate=calender.getTime();
+        
+        return changeDate;
     }
 }

@@ -27,6 +27,7 @@ public class bSessionScopeBeaninsumo implements Serializable{
     private Date fechaMinima = new Date();
     private String directorio = "INSUMOS GENERALES";
     
+    
     private boolean almacenEsc = false;
 
     //LISTAS
@@ -69,7 +70,7 @@ public class bSessionScopeBeaninsumo implements Serializable{
     private String imageRuta;
     
     
-    private AlmacenBean empresaSeleccionada;
+    private AlmacenBean almacenSeleccionado;
     
     //EDIT
     private String codigoEdit;
@@ -195,12 +196,12 @@ public class bSessionScopeBeaninsumo implements Serializable{
         return nidAlmacenSelecc;
     }
 
-    public void setEmpresaSeleccionada(AlmacenBean empresaSeleccionada) {
-        this.empresaSeleccionada = empresaSeleccionada;
+    public void setAlmacenSeleccionado(AlmacenBean almacenSeleccionado) {
+        this.almacenSeleccionado = almacenSeleccionado;
     }
 
-    public AlmacenBean getEmpresaSeleccionada() {
-        return empresaSeleccionada;
+    public AlmacenBean getAlmacenSeleccionado() {
+        return almacenSeleccionado;
     }
 
     public void setInsumoSelecc(InsumoBean insumoSelecc) {

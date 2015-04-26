@@ -5,13 +5,15 @@ import chemtools_logica.Entidades.Evento;
 import chemtools_logica.Entidades.Insumo;
 import chemtools_logica.Entidades.Usuario;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-public class EventoxinsumoBean {
+public class EventoxinsumoBean implements Serializable{
     private Date fecha_Evento;
     private InsumoBean insumo;
     private UsuarioBean usuario;

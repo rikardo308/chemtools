@@ -22,5 +22,7 @@ public interface LN_SFInsumoRemote {
     
     void cambioInsumoAlmacen(EventoxinsumoBean eventoxinsumo);
     
+    void cambioInsumoAlmacen(List<EventoxinsumoBean>listaBean);
+    
     boolean verificarCodigoDupl(String codigo);
 }

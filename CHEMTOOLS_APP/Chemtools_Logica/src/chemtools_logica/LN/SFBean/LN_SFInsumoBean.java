@@ -109,15 +109,27 @@ public class LN_SFInsumoBean implements LN_SFInsumoRemote, LN_SFInsumoLocal {
     public void cambioInsumoAlmacen(EventoxinsumoBean eventoxinsumo){
         Eventoxinsumo eInsumo = new Eventoxinsumo();
         
-        eInsumo = this.convertEntityToBeanEventoxinsumo(eventoxinsumo);
+        eInsumo = this.convertBeanToEntityEventoxinsumo(eventoxinsumo);
         
         bDL_SFEventoxinsumoRemote.mergeEventoxinsumo(eInsumo);
+    }
+    
+    public void cambioInsumoAlmacen(List<EventoxinsumoBean>listaBean){
+        List<Eventoxinsumo>listaEntidad = new ArrayList<Eventoxinsumo>();
+        
+        for(EventoxinsumoBean bean : listaBean){
+            Eventoxinsumo entidad = new Eventoxinsumo();
+            
+            entidad = convertBeanToEntityEventoxinsumo(bean);
+            
+            bDL_SFEventoxinsumoRemote.mergeEventoxinsumo(entidad);
+        }  
     }
     
     public void insertarInsumo(EventoxinsumoBean eventoxinsumo){
         Eventoxinsumo eInsumo = new Eventoxinsumo();
         
-        eInsumo = this.convertEntityToBeanEventoxinsumo(eventoxinsumo);
+        eInsumo = this.convertBeanToEntityEventoxinsumo(eventoxinsumo);
         
         bDL_SFEventoxinsumoRemote.mergeEventoxinsumo(eInsumo);
     }
@@ -164,7 +176,7 @@ public class LN_SFInsumoBean implements LN_SFInsumoRemote, LN_SFInsumoLocal {
         return insumoEntidad;
     }
     
-    public Eventoxinsumo convertEntityToBeanEventoxinsumo(EventoxinsumoBean eventoxinsumo){
+    public Eventoxinsumo convertBeanToEntityEventoxinsumo(EventoxinsumoBean eventoxinsumo){
         
         Eventoxinsumo eInsumo = new Eventoxinsumo();
         Insumo insumoEntidad = new Insumo();
@@ -179,7 +191,7 @@ public class LN_SFInsumoBean implements LN_SFInsumoRemote, LN_SFInsumoLocal {
             evento.setIdEvento(eventoxinsumo.getIdEvento());
             eInsumo.setEvento(evento);
         
-        eInsumo.setFecha_Evento(new Date());
+        eInsumo.setFecha_Evento(eventoxinsumo.getFecha_Evento());
             
             user.setIdUsuario(eventoxinsumo.getIdUsuario());
             eInsumo.setUsuario(user);
@@ -215,9 +227,9 @@ public class LN_SFInsumoBean implements LN_SFInsumoRemote, LN_SFInsumoLocal {
         insumoBean.setFecha_Caducacion(insumo.getFecha_Caducacion());
         
         if(insumo.getEstado() == 0){
-            insumoBean.setStyleEstado("background-color:Red;color:White;");
+            insumoBean.setStyleEstado("background-color:#EAB7B7;color:#675a5a;");
         }else{
-            insumoBean.setStyleEstado("background-color:Green;color:White;");
+            insumoBean.setStyleEstado("background-color:#C9E5F6;color:#675a5a;");
         }
         
         insumoBean.setIdtipoInsumo(insumo.getTipoinsumo().getIdTipoInsumo());

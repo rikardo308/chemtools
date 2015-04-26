@@ -72,7 +72,7 @@
                                                                actionListener="#{Frm_insumos.traeInsumos}"
                                                                styleClass="btnIng"
                                                                inlineStyle="width:100%;text-align: center">
-                                                               <af:setPropertyListener type="action" from="#{alm}" to="#{sessionScopeBeaninsumo.empresaSeleccionada}"/>         
+                                                               <af:setPropertyListener type="action" from="#{alm}" to="#{sessionScopeBeaninsumo.almacenSeleccionado}"/>         
                                                     </af:button>
                                                 </li>
                                             </af:forEach>
@@ -177,8 +177,8 @@
                                                 <af:button text="Nuevo" disabled="true" binding="#{Frm_insumos.btnAgregar}" actionListener="#{Frm_insumos.mostrarpopAgregar}" inlineStyle="margin-right: 8px"/>
                                                 <af:button text="Ver Imagen" disabled="true" inlineStyle="margin-right: 8px" binding="#{Frm_insumos.btnVerImagen}" actionListener="#{Frm_insumos.mostrarpopVerImagen}"/>
                                                 <af:button text="Nuevo T.Insumo" id="btnNuevoTinsum"
-                                                           binding="#{Frm_insumos.btnNuevotInsumo}" actionListener="#{Frm_insumos.mostrarpopAgregarTInsumo}"/>
-                                                <af:button text="Cambio Almacen" actionListener="#{Frm_insumos.mostrarpopCambioAlmacen}" binding="#{Frm_insumos.btnCambioAlmacen}"/>
+                                                           binding="#{Frm_insumos.btnNuevotInsumo}" inlineStyle="margin-right: 8px" actionListener="#{Frm_insumos.mostrarpopAgregarTInsumo}"/>
+                                                <af:button text="Cambio Almacen" disabled="true" actionListener="#{Frm_insumos.mostrarpopCambioAlmacen}" binding="#{Frm_insumos.btnCambioAlmacen}"/>
                                                 <br/>
                                             </af:panelGroupLayout>
                                             <br/>
@@ -192,11 +192,11 @@
                                               id="tbInsumos" var="insm" value="#{sessionScopeBeaninsumo.insumos}"
                                               selectionListener="#{Frm_insumos.selectInsumo}">
                                         <af:column inlineStyle="#{insm.styleEstado}" frozen="true" id="c0" width="80"
-                                                   sortProperty="description" sortable="true" headerText="Codigo">
+                                                    sortable="true" headerText="Codigo">
                                             <af:outputText id="description" value="#{insm.idInsumo}"/>
                                         </af:column>
                                         <af:column inlineStyle="#{insm.styleEstado}" id="c1" sortProperty="id"
-                                                   sortable="false" headerText="Nombre">
+                                                   headerText="Nombre">
                                             <af:outputText id="id" value="#{insm.comentario}"/>
                                         </af:column>
                                         <af:column inlineStyle="#{insm.styleEstado}" sortProperty="id" sortable="false"
@@ -446,14 +446,13 @@
                                 <f:selectItems value="#{sessionScopeBeaninsumo.listaAlmacen}"/>
                         </af:selectOneChoice>
                         
-                        <af:button text="Guardar"/>
+                        <af:button text="Guardar" actionListener="#{Frm_insumos.cambiarAlmacen}"/>
                     
                     </af:panelFormLayout>
                 
                 </af:dialog>
              
-             </af:popup>
-             
+             </af:popup>            
             
         </af:form>
     </af:document>
