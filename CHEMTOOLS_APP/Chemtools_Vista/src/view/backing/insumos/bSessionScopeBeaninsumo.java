@@ -28,6 +28,7 @@ public class bSessionScopeBeaninsumo implements Serializable{
     private String directorio = "INSUMOS GENERALES";
     
     
+    
     private boolean almacenEsc = false;
 
     //LISTAS

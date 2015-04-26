@@ -485,6 +485,7 @@ public class Frm_insumos {
             Date fechaSalida  = new Date();
             Date fechaEntrada = Utils.addTimeBySecondsDemo(fechaSalida, 2);
             
+            
             EventoxinsumoBean eInsumoSalida = new EventoxinsumoBean();
                 eInsumoSalida.setFecha_Evento(fechaSalida);
                 eInsumoSalida.setIdEvento(4);
@@ -503,6 +504,7 @@ public class Frm_insumos {
                 listaEvento.add(eInsumoSalida);
                 listaEvento.add(eInsumoEntrada);          
             
+           
             lN_SFInsumoRemote.cambioInsumoAlmacen(listaEvento);  
             
 
