@@ -478,9 +478,6 @@ public class Frm_insumos {
         InsumoBean beanInsumo = sessionScopeBeaninsumo.getInsumoSelecc();  
         if(sessionScopeBeaninsumo.isCambioAlmacen() && sessionScopeBeaninsumo.getAlmacenedit() != 0 && beanInsumo.getEstado() == 1){
             
-            
-            
-            
             int usuario = sessionScopeBeaninsumo.getUsuario().getIdUsuario();
             int almacenEntrada = sessionScopeBeaninsumo.getAlmacenedit();
             int almacenSalida = sessionScopeBeaninsumo.getAlmacenSeleccionado().getIdAlmacen();
