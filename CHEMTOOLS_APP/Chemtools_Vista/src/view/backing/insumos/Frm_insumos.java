@@ -504,7 +504,6 @@ public class Frm_insumos {
                 listaEvento.add(eInsumoEntrada);          
             
             lN_SFInsumoRemote.cambioInsumoAlmacen(listaEvento);  
-                //lN_SFInsumoRemote.cambioInsumoAlmacen(eInsumo);
 
             sessionScopeBeaninsumo.setCambioAlmacen(false);
             
@@ -513,8 +512,6 @@ public class Frm_insumos {
             Utils.addTarget(getTbInsumos());
             
             sessionScopeBeaninsumo.setAlmacenedit(0);
-            
-            //Utils.clearRowSelection(getTbInsumos());
             
             getPopCambioAlmacen().hide();
         }else if(beanInsumo.getEstado() != 1){
